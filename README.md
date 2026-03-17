@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ Projeto Nikola Tesla - Plataforma Educacional e Institucional Gamificada
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-14+-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=mui&logoColor=white)
 
-First, run the development server:
+O **Projeto Nikola Tesla** é uma plataforma educacional inovadora construída para gerir uma metodologia de ensino baseada em **Cultura Maker, Robótica, Neuroeducação e Gamificação**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O sistema transforma a experiência escolar numa verdadeira "Base de Inventores", onde alunos são organizados em Guildas, acumulam XP (Pontos de Experiência), sobem de Nível e recebem feedbacks contínuos.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 👨‍🚀 Portal do Inventor (Aluno)
 
-## Learn More
+- **Dashboard Gamificado:** Visualização de Nível, barra de progresso de XP e Guilda atual.
+- **Boletim de Missões:** Histórico de notas divididas em Prática (PAPE) e Portfólio (PAP-PC).
+- **Transmissões da Torre (Feedbacks):** Receção de avaliações formativas (Método Pendleton) com Pontos Fortes e Plano de Ação.
+- **Gestão de Segurança:** Opção nativa para atualização de senha do perfil.
 
-To learn more about Next.js, take a look at the following resources:
+### 👨‍🏫 Torre de Controlo (Admin / Professor)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Recrutamento:** Gestão de novas inscrições públicas com aprovação/rejeição.
+- **Automação de E-mails:** Disparo automático de credenciais de acesso para alunos aprovados e mensagens de fila de espera.
+- **Sala de Guerra (Guildas):** Criação de equipas (Guildas) e alocação de alunos.
+- **Sistema de Avaliação:** Lançamento de notas técnicas e comportamentais que são convertidas automaticamente em XP para os alunos.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 📝 Área Pública
 
-## Deploy on Vercel
+- **Landing Page:** Apresentação da metodologia do projeto.
+- **Formulário de Inscrição:** Captação de novos candidatos interessados.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Tecnologias Utilizadas
+
+- **Frontend:** Next.js (App Router), React, TypeScript.
+- **Estilização:** Material-UI (MUI).
+- **Backend as a Service (BaaS):** Supabase (PostgreSQL para Banco de Dados e Supabase Auth para Autenticação).
+- **Comunicações:** Nodemailer (Integração com Gmail para envio de e-mails transacionais).
+
+---
+
+## ⚖️ Licença e Direitos Autorais
+
+© 2026 Projeto Nikola Tesla. Todos os direitos reservados.
+
+Este projeto é de código fechado (Closed Source) e software proprietário. É estritamente proibida a cópia, reprodução, distribuição, modificação ou uso comercial de qualquer parte deste código sem autorização prévia e expressa do autor.

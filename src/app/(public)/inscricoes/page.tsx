@@ -4,7 +4,6 @@ import { useState, useEffect, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import Link from "next/link";
 
 // Seus imports lógicos (Mantenha os mesmos caminhos que você já usa)
 import { formSchema } from "@/schemas/registration-schema";
@@ -34,7 +33,6 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Grid3x3 } from "@mui/icons-material";
 
 export default function InscricoesTesla() {
   // ==========================================
@@ -536,7 +534,7 @@ export default function InscricoesTesla() {
                 </Typography>
 
                 <Grid container spacing={2} sx={{ mb: 4 }}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <Button
                       fullWidth
                       variant="outlined"
@@ -548,7 +546,7 @@ export default function InscricoesTesla() {
                       Baixar Termo (Menor)
                     </Button>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid size={{ xs: 12, sm: 6 }}>
                     <Button
                       fullWidth
                       variant="outlined"

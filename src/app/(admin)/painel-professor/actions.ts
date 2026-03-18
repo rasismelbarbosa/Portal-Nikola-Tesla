@@ -68,10 +68,10 @@ export async function aprovarCandidato(inscricaoId: string) {
             <p style="margin: 0;"><strong>O seu E-mail de Acesso:</strong> ${inscricao.email}</p>
             <p style="margin: 10px 0 0 0;"><strong>A sua Palavra-passe:</strong> ${senhaPadrao}</p>
           </div>
-          <p>Aceda ao seu painel para ver as suas missões e a sua Guilda.</p>
-          <p>Estamos ansiosos para ver o que vai criar!</p>
+          <p>Vá até o seu painel para ver as suas missões e a sua Guilda.</p>
+          <p>Estamos ansiosos para ver o que você vai criar!</p>
           <br/>
-          <p>Comandante do Projeto Nikola Tesla</p>
+          <p>Coordenador do Projeto Nikola Tesla</p>
         </div>
       `,
     });
@@ -108,9 +108,9 @@ export async function rejeitarCandidato(inscricaoId: string) {
       html: `
         <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
           <h2 style="color: #333;">Olá, ${inscricao.full_name}.</h2>
-          <p>Agradecemos imenso o seu interesse em participar no <strong>Projeto Nikola Tesla</strong>.</p>
+          <p>Agradecemos imensamente o seu interesse em participar no <strong>Projeto Nikola Tesla</strong>.</p>
           <p>Infelizmente, neste momento as nossas vagas estão esgotadas ou o seu perfil não se adequa à fase atual do projeto, e não poderemos seguir com a sua inscrição.</p>
-          <p>Iremos manter os seus dados em lista de espera e entraremos em contacto caso surjam novas oportunidades no futuro!</p>
+          <p>Iremos manter os seus dados em lista de espera e entraremos em contato caso surjam novas oportunidades no futuro!</p>
           <br/>
           <p>Continue a inventar e a aprender!</p>
           <p>Equipe do Projeto Nikola Tesla</p>

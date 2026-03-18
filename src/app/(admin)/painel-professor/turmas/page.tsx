@@ -126,7 +126,7 @@ export default function GestaoGuildasPage() {
           {/* ==========================================
               1. FORJAR NOVA GUILDA
           ========================================== */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card
               sx={{
                 bgcolor: "rgba(255,255,255,0.03)",
@@ -202,7 +202,7 @@ export default function GestaoGuildasPage() {
           {/* ==========================================
               2. RECRUTAR INVENTORES
           ========================================== */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card
               sx={{
                 bgcolor: "rgba(255,255,255,0.03)",
@@ -309,7 +309,7 @@ export default function GestaoGuildasPage() {
           {/* ==========================================
               3. VISÃO GERAL DAS GUILDAS
           ========================================== */}
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Typography
               variant="h5"
               color="white"
@@ -326,14 +326,14 @@ export default function GestaoGuildasPage() {
 
             <Grid container spacing={3}>
               {guildas.length === 0 ? (
-                <Grid item xs={12}>
+                <Grid size={{ xs: 12 }}>
                   <Typography sx={{ color: "rgba(255,255,255,0.5)" }}>
                     Nenhuma Guilda forjada ainda.
                   </Typography>
                 </Grid>
               ) : (
                 guildas.map((guilda) => (
-                  <Grid item xs={12} md={4} key={guilda.id}>
+                  <Grid size={{ xs: 12, md: 4 }} key={guilda.id}>
                     <Card
                       sx={{
                         bgcolor: "rgba(0,0,0,0.4)",

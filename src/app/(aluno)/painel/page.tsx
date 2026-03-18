@@ -21,9 +21,9 @@ import {
   Alert,
 } from "@mui/material";
 import { createClient } from "@/utils/supabase/client";
+import Image from "next/image";
 
 // Ícones
-import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ForumIcon from "@mui/icons-material/Forum";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
@@ -188,9 +188,7 @@ export default function PainelAluno() {
           <CardContent sx={{ p: "4%" }}>
             <Grid container spacing={4} alignItems="center">
               <Grid
-                item
-                xs={12}
-                md={8}
+                size={{ xs: 12, md: 8 }}
                 sx={{ display: "flex", alignItems: "center", gap: 3 }}
               >
                 <Avatar
@@ -201,7 +199,16 @@ export default function PainelAluno() {
                     border: "2px solid #FFF700",
                   }}
                 >
-                  <ElectricBoltIcon sx={{ fontSize: 40, color: "#0a0a0a" }} />
+                  <Box
+                    sx={{ position: "relative", width: "90%", height: "90%" }}
+                  >
+                    <Image
+                      src="/logo-tesla-branco.svg"
+                      alt="Logo Tesla"
+                      fill
+                      style={{ objectFit: "contain" }}
+                    />
+                  </Box>
                 </Avatar>
                 <Box>
                   <Typography
@@ -244,7 +251,7 @@ export default function PainelAluno() {
                 </Box>
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <Box
                   sx={{
                     bgcolor: "rgba(0,0,0,0.5)",
@@ -333,7 +340,7 @@ export default function PainelAluno() {
         ) : (
           <Grid container spacing={3} sx={{ mb: 6 }}>
             {avaliacoes.map((av, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
                 <Card
                   sx={{
                     bgcolor: "rgba(255,255,255,0.02)",
@@ -421,7 +428,7 @@ export default function PainelAluno() {
         ) : (
           <Grid container spacing={3} width={"100%"}>
             {feedbacks.map((fb) => (
-              <Grid item xs={12} key={fb.id}>
+              <Grid size={{ xs: 12 }} key={fb.id}>
                 <Card
                   sx={{
                     bgcolor: "rgba(255,255,255,0.02)",
@@ -441,7 +448,7 @@ export default function PainelAluno() {
 
                     <Grid container spacing={3}>
                       {/* Pontos Fortes */}
-                      <Grid item xs={12} md={6}>
+                      <Grid size={{ xs: 12, md: 6 }}>
                         <Box
                           sx={{
                             bgcolor: "rgba(5, 153, 117, 0.05)",
@@ -481,7 +488,7 @@ export default function PainelAluno() {
                       </Grid>
 
                       {/* Plano de Ação */}
-                      <Grid item xs={12} md={6}>
+                      <Grid size={{ xs: 12, md: 6 }}>
                         <Box
                           sx={{
                             bgcolor: "rgba(255, 247, 0, 0.05)",

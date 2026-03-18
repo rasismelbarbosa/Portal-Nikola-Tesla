@@ -18,7 +18,6 @@ import RecyclingIcon from "@mui/icons-material/Recycling";
 import CodeIcon from "@mui/icons-material/Code";
 import MicIcon from "@mui/icons-material/Mic";
 import ShieldIcon from "@mui/icons-material/Shield";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 export default function HomeTesla() {
   return (
@@ -118,7 +117,7 @@ export default function HomeTesla() {
       >
         <Grid container spacing={3}>
           {/* Pilar 1 */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card
               sx={{
                 height: "100%",
@@ -142,7 +141,7 @@ export default function HomeTesla() {
           </Grid>
 
           {/* Pilar 2 */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card
               sx={{
                 height: "100%",
@@ -163,7 +162,7 @@ export default function HomeTesla() {
           </Grid>
 
           {/* Pilar 3 */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card
               sx={{
                 height: "100%",
@@ -186,7 +185,7 @@ export default function HomeTesla() {
           </Grid>
 
           {/* Pilar 4 */}
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <Card
               sx={{
                 height: "100%",
@@ -214,7 +213,7 @@ export default function HomeTesla() {
       <Container sx={{ mt: 10 }}>
         <Grid container spacing={6} alignItems="center">
           {/* Texto Explicativo */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography
               variant="overline"
               color="primary"
@@ -293,7 +292,7 @@ export default function HomeTesla() {
           </Grid>
 
           {/* Imagem ou Ilustração à direita */}
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box
               sx={{
                 width: "100%",

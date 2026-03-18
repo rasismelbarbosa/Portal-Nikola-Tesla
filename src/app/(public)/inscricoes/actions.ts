@@ -85,11 +85,11 @@ export async function submitRegistration(prevState: any, formData: FormData) {
       html: `
           <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
             <h2 style="color: #059975;">Olá, ${validated.data.fullName}!</h2>
-            <p>Os seus radares estão a funcionar perfeitamente: <strong>a sua inscrição foi recebida com sucesso na nossa Torre de Controlo!</strong></p>
+            <p>Os seus radares estão funcionando perfeitamente: <strong>a sua inscrição foi recebida com sucesso na nossa Torre de Controle!</strong></p>
             <p>Neste momento, o seu perfil está em análise pela nossa equipe de coordenação.</p>
             <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #00d4ff;">
               <p style="margin: 0;"><strong>O que acontece agora?</strong></p>
-              <p style="margin: 10px 0 0 0;">Fique de olho nesta caixa de entrada. Assim que abrirmos novas vagas e o seu perfil for aprovado, enviaremos um e-mail com as suas credenciais de acesso oficiais à Base Tesla.</p>
+              <p style="margin: 10px 0 0 0;">Fique de olho no seu Email. Assim que abrirmos novas vagas e o seu perfil for aprovado, enviaremos um e-mail com as suas credenciais de acesso oficiais à Base Tesla.</p>
             </div>
             <p>Até breve, futuro inventor!</p>
             <br/>

@@ -93,13 +93,13 @@ export default function OEnredo() {
               textShadow: "0 0 5px rgba(74, 222, 128, 0.3)", // Leve brilho na letra
             }}
           >
-            "Saudações, jovens. Se estão a ler isto, a minha transmissão
+            "Saudações, jovens. Se estão lendo isto, a minha transmissão
             temporal funcionou.
             <br />
             <br />
             No meu tempo, o mundo ruiu. A tecnologia, que deveria ser a nossa
             salvação, foi usada com egoísmo. O lixo eletrónico consumiu as
-            nossas cidades e esquecemo-nos de como criar. Tornámo-nos apenas
+            nossas cidades e nos esquecemos de como criar. Nos tornamos apenas
             consumidores inertes.
             <br />
             <br />
@@ -109,12 +109,12 @@ export default function OEnredo() {
             <br />
             <br />
             Preciso que despertem. O Projeto Tesla não é uma simples aula, é o
-            vosso treino. Vocês aprenderão a dominar a eletrónica, a reciclar o
-            que foi descartado e a dar vida ao metal. Formem as vossas Guildas,
+            seu treino. Vocês aprenderão a dominar a eletrónica, a reciclar o
+            que foi descartado e a dar vida ao metal. Formem suas Guildas,
             concluam as Missões e construam a Cidade do Futuro.
             <br />
             <br />
-            A resistência começa nas vossas mãos. O futuro depende de vocês."
+            A resistência começa nas suas mãos. O futuro depende de vocês!"
             <br />
             <br />— N. Tesla.
           </Typography>
@@ -144,7 +144,7 @@ export default function OEnredo() {
         </Typography>
 
         <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card
               sx={{
                 height: "100%",
@@ -164,13 +164,13 @@ export default function OEnredo() {
                   Ninguém salva o mundo sozinho. Os alunos são divididos em
                   equipes chamadas "Guildas". Vocês trabalharão juntos para
                   montar os circuitos, programar os robôs e desenvolver a
-                  oratória para defender os vossos projetos perante o conselho.
+                  oratória para defender seus projetos perante O Conselho.
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Card
               sx={{
                 height: "100%",
@@ -187,10 +187,10 @@ export default function OEnredo() {
                   A Sucata Vira Ouro
                 </Typography>
                 <Typography color="text.secondary" sx={{ lineHeight: 1.7 }}>
-                  Não compraremos kits prontos. O vosso treino envolve "Anatomia
-                  do Lixo". Desmontaremos leitores de DVD antigos e mouses
+                  Não compraremos kits prontos. Seu treino envolve "Anatomia do
+                  Lixo". Desmontaremos leitores de DVD antigos e mouses
                   estragados para extrair motores DC, engrenagens e LEDs. A
-                  sustentabilidade é a vossa principal arma.
+                  sustentabilidade é a nossa principal arma.
                 </Typography>
               </CardContent>
             </Card>

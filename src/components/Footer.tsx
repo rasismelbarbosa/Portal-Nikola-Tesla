@@ -34,7 +34,7 @@ export default function Footer() {
           {/* ==========================================
               COLUNA 1: Logo e Missão
           ========================================== */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Box
               sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2 }}
             >
@@ -70,7 +70,7 @@ export default function Footer() {
           {/* ==========================================
               COLUNA 2: Acesso Rápido
           ========================================== */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -133,7 +133,7 @@ export default function Footer() {
           {/* ==========================================
               COLUNA 3: Contato e Redes
           ========================================== */}
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Typography
               variant="subtitle1"
               fontWeight="bold"

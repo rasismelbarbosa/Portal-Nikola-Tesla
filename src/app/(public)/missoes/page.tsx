@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   Chip,
-  Grid,
 } from "@mui/material";
 
 // Ícones para cada missão

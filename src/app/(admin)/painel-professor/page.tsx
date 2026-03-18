@@ -353,7 +353,7 @@ export default function PainelProfessor() {
             2. CARDS DE MÉTRICAS RÁPIDAS (Dinâmicos)
         ========================================== */}
         <Grid container spacing={3} sx={{ mb: 6 }}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card
               sx={{
                 bgcolor: "rgba(255, 247, 0, 0.1)",
@@ -387,7 +387,7 @@ export default function PainelProfessor() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card
               sx={{
                 bgcolor: "rgba(5, 153, 117, 0.1)",
@@ -418,7 +418,7 @@ export default function PainelProfessor() {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Card
               sx={{
                 bgcolor: "rgba(149, 106, 217, 0.1)",

@@ -2,7 +2,6 @@
 
 import {
   Box,
-  Drawer,
   List,
   ListItem,
   ListItemButton,
@@ -14,17 +13,15 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client"; // Atenção ao import do client!
+import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
 
 // Ícones
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
-import FactCheckIcon from "@mui/icons-material/FactCheck"; // Para o PAPE (Checklist)
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects"; // Para o PAP-PC (Criatividade)
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import LogoutIcon from "@mui/icons-material/Logout";
-
-const LARGURA_MENU = 280;
 
 export default function SidebarAdmin() {
   const pathname = usePathname();
@@ -33,7 +30,7 @@ export default function SidebarAdmin() {
 
   const fazerLogoff = async () => {
     await supabase.auth.signOut();
-    router.push("/login");
+    router.push("/");
   };
 
   const menuItems = [
@@ -61,22 +58,17 @@ export default function SidebarAdmin() {
       titulo: "Feedback Formativo",
       rota: "/painel-professor/feedback",
       icone: <FactCheckIcon />,
-    }, // Pode usar outro ícone se preferir
+    },
   ];
 
   return (
-    <Drawer
-      variant="permanent" // Fica sempre visível no PC
+    <Box
       sx={{
-        width: LARGURA_MENU,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: LARGURA_MENU,
-          boxSizing: "border-box",
-          bgcolor: "#0a0a0a", // Fundo escuro
-          color: "white",
-          borderRight: "1px solid rgba(149, 106, 217, 0.2)", // Borda roxa subtil
-        },
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        bgcolor: "#0a0a0a", // Fundo escuro
+        color: "white",
       }}
     >
       {/* CABEÇALHO DO MENU */}
@@ -122,7 +114,7 @@ export default function SidebarAdmin() {
       {/* LISTA DE LINKS */}
       <List sx={{ px: 2, flexGrow: 1 }}>
         {menuItems.map((item) => {
-          const isActive = pathname === item.rota; // Verifica se estamos na página atual
+          const isActive = pathname === item.rota;
 
           return (
             <ListItem key={item.rota} disablePadding sx={{ mb: 1 }}>
@@ -183,6 +175,6 @@ export default function SidebarAdmin() {
           Encerrar Sessão
         </Button>
       </Box>
-    </Drawer>
+    </Box>
   );
 }

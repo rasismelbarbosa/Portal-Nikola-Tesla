@@ -44,7 +44,7 @@ export default function LoginPage() {
             textAlign: "center",
             overflow: "visible",
             position: "relative",
-            mt: 5,
+            mt: "20%",
           }}
         >
           {/* Ícone de Cadeado Flutuante */}

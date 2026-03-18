@@ -180,7 +180,7 @@ export default function PainelProfessor() {
                   Acesso Nível Máximo
                 </Typography>
                 <Typography variant="h4" fontWeight="900" color="white">
-                  Torre de Controlo: Tesla
+                  Torre de Controle: Tesla
                 </Typography>
               </Box>
             </Box>

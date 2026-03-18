@@ -44,7 +44,7 @@ export default function Navbar() {
               />
             </Box>
             <Typography
-              variant="h5"
+              variant="h6"
               component={Link}
               href="/"
               sx={{

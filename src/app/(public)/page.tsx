@@ -117,15 +117,16 @@ export default function Home() {
         }}
       >
         <Box
-          width={"90vw"}
-          // bgcolor={"#f5f"}
-          minHeight={"25vh"}
-          marginTop={1}
-          display={"flex"}
-          flexDirection={{ md: "row", pq: "column" }}
-          alignItems={"flex-start"}
-          justifyContent={"space-between"}
-          gap={4}
+          sx={{
+            width: "90vw",
+            minHeight: "25vh",
+            mt: "2.5%",
+            display: "flex",
+            flexDirection: { md: "row", xs: "column" },
+            alignItems: "stretch",
+            justifyContent: "space-between",
+            gap: 4,
+          }}
         >
           <Card
             sx={{
@@ -312,8 +313,8 @@ export default function Home() {
             height: { xs: 500, sm: 400 }, // Um pouco mais alto no celular para acomodar as 3 fotos
             display: "grid",
             alignSelf: "center",
-            gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
-            gridTemplateRows: { xs: "repeat(3, 1fr)", sm: "repeat(2, 1fr)" },
+            gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" },
+            gridTemplateRows: { xs: "repeat(3, 1fr)", md: "repeat(2, 1fr)" },
             gap: 2,
           }}
         >

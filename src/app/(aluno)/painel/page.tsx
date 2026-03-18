@@ -293,21 +293,29 @@ export default function PainelAluno() {
                   />
                 </Box>
               </Grid>
-              <Button
-                variant="outlined"
-                onClick={() => setModalSenha(true)}
-                startIcon={<VpnKeyIcon />}
+              <Grid
+                size={{ xs: 12 }}
                 sx={{
-                  color: "white",
-                  borderColor: "rgba(255,255,255,0.3)",
-                  borderRadius: 2,
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  display: { xs: "none", sm: "flex" },
+                  display: "flex",
+                  justifyContent: { xs: "center", md: "flex-end" },
                 }}
               >
-                Senha
-              </Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => setModalSenha(true)}
+                  startIcon={<VpnKeyIcon />}
+                  sx={{
+                    color: "white",
+                    borderColor: "rgba(255,255,255,0.3)",
+                    borderRadius: 2,
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    // display: { xs: "none", sm: "flex" },
+                  }}
+                >
+                  Mudar Senha
+                </Button>
+              </Grid>
             </Grid>
           </CardContent>
         </Card>

@@ -22,6 +22,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import LogoutIcon from "@mui/icons-material/Logout";
+import PublishIcon from "@mui/icons-material/Publish";
 
 export default function SidebarAdmin() {
   const pathname = usePathname();
@@ -58,6 +59,11 @@ export default function SidebarAdmin() {
       titulo: "Feedback Formativo",
       rota: "/painel-professor/feedback",
       icone: <FactCheckIcon />,
+    },
+    {
+      titulo: "Cadastrar Alunos",
+      rota: "/painel-professor/cadastro-alunos",
+      icone: <PublishIcon />,
     },
   ];
 

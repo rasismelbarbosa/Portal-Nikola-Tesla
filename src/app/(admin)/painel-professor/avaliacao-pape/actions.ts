@@ -41,7 +41,7 @@ export async function registarAvaliacaoPape(dados: {
     // 4. Vai buscar o perfil atual do aluno para somar o XP
     const { data: aluno, error: erroAluno } = await supabase
       .from("alunos")
-      .select("xp_atual, xp_proximo_nivel, nivel")
+      .select("xp_atual, xp_proximo_nivel, nivel, nota_pap_pc")
       .eq("id", dados.aluno_id)
       .single();
 
@@ -54,7 +54,7 @@ export async function registarAvaliacaoPape(dados: {
     }
 
     if (aluno) {
-      let novoXp = aluno.xp_atual + xpGanho;
+      const novoXp = aluno.xp_atual + xpGanho;
       let novoNivel = aluno.nivel;
       let novoXpProximo = aluno.xp_proximo_nivel;
 
@@ -64,6 +64,10 @@ export async function registarAvaliacaoPape(dados: {
         novoXpProximo = novoXpProximo + 2000;
       }
 
+      const valorPapPc = parseFloat(aluno.nota_pap_pc || 0);
+      // Calcula: (Nota Final da PAPE + Nota do Portfólio) / 2
+      const novaMedia = parseFloat(((nota_final + valorPapPc) / 2).toFixed(2));
+
       // 6. Atualiza o perfil do aluno
       const { error: erroUpdate } = await supabase
         .from("alunos")
@@ -71,6 +75,8 @@ export async function registarAvaliacaoPape(dados: {
           xp_atual: novoXp,
           nivel: novoNivel,
           xp_proximo_nivel: novoXpProximo,
+          nota_pape: nota_final, // <-- Guarda a nota bruta desta missão PAPE
+          media: novaMedia,
         })
         .eq("id", dados.aluno_id);
 

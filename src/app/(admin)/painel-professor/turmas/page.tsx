@@ -4,404 +4,301 @@ import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
-  Container,
-  Card,
-  CardContent,
-  TextField,
   Button,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  Alert,
-  CircularProgress,
-  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Chip,
+  CircularProgress,
 } from "@mui/material";
+import Link from "next/link";
+import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
+import ResumoAlunoModal from "@/components/ResumoAlunoModal";
 import { createClient } from "@/utils/supabase/client";
-import { criarGuilda, vincularAlunoGuilda } from "./actions";
-import GroupIcon from "@mui/icons-material/Group";
-import ShieldIcon from "@mui/icons-material/Shield";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DownloadIcon from "@mui/icons-material/Download";
 
-export default function GestaoGuildasPage() {
+export default function TurmasPage() {
   const supabase = createClient();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [alunoSelecionado, setAlunoSelecionado] = useState<any>(null);
+
+  // Estados para os dados reais
   const [alunos, setAlunos] = useState<any[]>([]);
-  const [guildas, setGuildas] = useState<any[]>([]);
   const [carregando, setCarregando] = useState(true);
-  const [mensagem, setMensagem] = useState({ tipo: "", texto: "" });
 
-  // Formulários
-  const [formGuilda, setFormGuilda] = useState({ nome: "", descricao: "" });
-  const [formVinculo, setFormVinculo] = useState({
-    aluno_id: "",
-    guilda_id: "",
-  });
-
-  // Função para carregar os dados atualizados
-  const carregarDados = async () => {
-    setCarregando(true);
-
-    // Busca Guildas e os alunos que estão dentro delas
-    const { data: dadosGuildas } = await supabase
-      .from("guildas")
-      .select("*, alunos(id, nome)")
-      .order("nome");
-    if (dadosGuildas) setGuildas(dadosGuildas);
-
-    // Busca todos os Alunos
-    const { data: dadosAlunos } = await supabase
-      .from("alunos")
-      .select("id, nome, guilda_id, turma")
-      .order("nome");
-    if (dadosAlunos) setAlunos(dadosAlunos);
-
-    setCarregando(false);
-  };
-
+  // Busca os alunos reais no Supabase assim que a página carrega
   useEffect(() => {
-    carregarDados();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const buscarAlunos = async () => {
+      const { data, error } = await supabase
+        .from("alunos")
+        .select("*")
+        .order("nome", { ascending: true }); // Ordena por ordem alfabética
 
-  const handleCriarGuilda = async () => {
-    if (!formGuilda.nome) return;
-    const resposta = await criarGuilda(formGuilda);
-    if (resposta.sucesso) {
-      setMensagem({
-        tipo: "success",
-        texto: `Guilda "${formGuilda.nome}" forjada com sucesso!`,
-      });
-      setFormGuilda({ nome: "", descricao: "" });
-      carregarDados(); // Atualiza a lista
-    } else {
-      setMensagem({
-        tipo: "error",
-        texto: resposta.erro || "Erro ao criar Guilda.",
-      });
-    }
+      if (error) {
+        console.error("Erro ao buscar alunos:", error);
+      } else if (data) {
+        setAlunos(data);
+      }
+      setCarregando(false);
+    };
+
+    buscarAlunos();
+  }, [supabase]);
+
+  const abrirModal = (aluno: any) => {
+    setAlunoSelecionado(aluno);
+    setModalOpen(true);
   };
 
-  const handleVincularAluno = async () => {
-    if (!formVinculo.aluno_id || !formVinculo.guilda_id) return;
-    const resposta = await vincularAlunoGuilda(
-      formVinculo.aluno_id,
-      formVinculo.guilda_id,
-    );
-    if (resposta.sucesso) {
-      setMensagem({
-        tipo: "success",
-        texto: "Inventor recrutado para a Guilda com sucesso!",
+  const exportarPlanilha = async () => {
+    try {
+      // 1. Busca os dados
+      const { data: alunosData } = await supabase
+        .from("alunos")
+        .select("id, nome, frequencia")
+        .order("nome", { ascending: true });
+      const { data: aulasData } = await supabase
+        .from("aulas")
+        .select("id, data_aula")
+        .order("data_aula", { ascending: true });
+      const { data: frequenciasData } = await supabase
+        .from("frequencias")
+        .select("*");
+
+      if (!alunosData || !aulasData || !frequenciasData) return;
+
+      // 2. Monta o Cabeçalho (Nomes, Data1, Data2, ..., Frequência Final)
+      const cabecalho = ["Nome do Aluno"];
+      aulasData.forEach((aula) => {
+        cabecalho.push(new Date(aula.data_aula).toLocaleDateString("pt-PT"));
       });
-      setFormVinculo({ aluno_id: "", guilda_id: "" });
-      carregarDados(); // Atualiza a lista
-    } else {
-      setMensagem({
-        tipo: "error",
-        texto: resposta.erro || "Erro ao vincular.",
+      cabecalho.push("Frequência Geral (%)");
+
+      // 3. Monta as Linhas (Um aluno por linha com True/False)
+      const linhas = alunosData.map((aluno) => {
+        const linha = [aluno.nome];
+
+        aulasData.forEach((aula) => {
+          // Procura se o aluno tem registo nesta aula específica
+          const reg = frequenciasData.find(
+            (f) => f.aluno_id === aluno.id && f.aula_id === aula.id,
+          );
+
+          if (!reg) {
+            linha.push("-"); // Se não houver registo ainda
+          } else if (
+            reg.status === "Presente" ||
+            reg.status === "Justificado"
+          ) {
+            linha.push("TRUE"); // Presente ou Justificado fica como TRUE (como na sua planilha)
+          } else {
+            linha.push("FALSE"); // Falta fica como FALSE
+          }
+        });
+
+        linha.push(`${aluno.frequencia || 0}%`);
+        return linha.join(","); // Junta a linha com vírgulas
       });
+
+      // 4. Junta o cabeçalho com as linhas
+      const csvContent = cabecalho.join(",") + "\n" + linhas.join("\n");
+
+      // 5. Força o download do ficheiro
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `Chamada_Tesla_${new Date().toISOString().split("T")[0]}.csv`,
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Erro ao exportar planilha:", error);
+      alert("Erro ao gerar o relatório.");
     }
   };
 
   return (
-    <Box sx={{ p: { xs: 2, md: 5 } }}>
-      <Container maxWidth="xl">
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}>
-          <GroupIcon sx={{ color: "#956AD9", fontSize: 40 }} />
-          <Typography variant="h4" fontWeight="900" color="white">
-            Gestão de Guildas
-          </Typography>
-        </Box>
+    <Box>
+      {/* CABEÇALHO E BOTÕES DE AÇÃO */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
+          alignItems: { md: "center" },
+          mb: 4,
+          gap: 2,
+        }}
+      >
+        <Typography variant="h4" fontWeight="bold" color="white">
+          Gestão de Turmas
+        </Typography>
 
-        {mensagem.texto && (
-          <Alert
-            severity={mensagem.tipo as any}
-            sx={{ mb: 4, borderRadius: 2 }}
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <Button
+            component={Link}
+            href="/painel-professor/turmas/cadastro-aula"
+            variant="contained"
+            startIcon={<AddBoxIcon />}
+            sx={{
+              bgcolor: "#956AD9",
+              fontWeight: "bold",
+              "&:hover": { bgcolor: "#7a52b3" },
+            }}
           >
-            {mensagem.texto}
-          </Alert>
-        )}
+            Cadastrar Aula
+          </Button>
+          <Button
+            component={Link}
+            href="/painel-professor/turmas/cadastro-frequencia"
+            variant="contained"
+            startIcon={<ChecklistRtlIcon />}
+            sx={{
+              bgcolor: "#2F9E41",
+              fontWeight: "bold",
+              "&:hover": { bgcolor: "#237a32" },
+            }}
+          >
+            Lançar Frequência
+          </Button>
 
-        <Grid container spacing={4}>
-          {/* ==========================================
-              1. FORJAR NOVA GUILDA
-          ========================================== */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Card
-              sx={{
-                bgcolor: "rgba(255,255,255,0.03)",
-                borderRadius: 4,
-                border: "1px solid rgba(149, 106, 217, 0.3)",
-                height: "100%",
-              }}
-            >
-              <CardContent sx={{ p: 4 }}>
-                <Box
-                  sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}
-                >
-                  <ShieldIcon sx={{ color: "#956AD9" }} />
-                  <Typography variant="h6" color="white" fontWeight="bold">
-                    Forjar Nova Guilda
-                  </Typography>
-                </Box>
+          <Button
+            onClick={exportarPlanilha}
+            variant="outlined"
+            startIcon={<DownloadIcon />}
+            sx={{
+              color: "white",
+              borderColor: "rgba(255,255,255,0.3)",
+              fontWeight: "bold",
+              "&:hover": {
+                borderColor: "white",
+                bgcolor: "rgba(255,255,255,0.1)",
+              },
+            }}
+          >
+            Exportar CSV
+          </Button>
+        </Box>
+      </Box>
 
-                <TextField
-                  fullWidth
-                  label="Nome da Guilda (Ex: Esquadrão Faraday)"
-                  value={formGuilda.nome}
-                  onChange={(e) =>
-                    setFormGuilda({ ...formGuilda, nome: e.target.value })
-                  }
-                  sx={{
-                    mb: 3,
-                    input: { color: "white" },
-                    label: { color: "rgba(255,255,255,0.5)" },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": { borderColor: "rgba(149, 106, 217, 0.5)" },
-                    },
-                  }}
-                />
-
-                <TextField
-                  fullWidth
-                  label="Lema / Descrição (Opcional)"
-                  value={formGuilda.descricao}
-                  onChange={(e) =>
-                    setFormGuilda({ ...formGuilda, descricao: e.target.value })
-                  }
-                  sx={{
-                    mb: 3,
-                    input: { color: "white" },
-                    label: { color: "rgba(255,255,255,0.5)" },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": { borderColor: "rgba(149, 106, 217, 0.5)" },
-                    },
-                  }}
-                />
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={handleCriarGuilda}
-                  disabled={!formGuilda.nome}
-                  sx={{
-                    py: 1.5,
-                    bgcolor: "#956AD9",
-                    color: "white",
-                    fontWeight: "bold",
-                    borderRadius: 2,
-                    "&:hover": { bgcolor: "#7a52b3" },
-                  }}
-                >
-                  CRIAR GUILDA
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* ==========================================
-              2. RECRUTAR INVENTORES
-          ========================================== */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Card
-              sx={{
-                bgcolor: "rgba(255,255,255,0.03)",
-                borderRadius: 4,
-                border: "1px solid rgba(5, 153, 117, 0.3)",
-                height: "100%",
-              }}
-            >
-              <CardContent sx={{ p: 4 }}>
-                <Box
-                  sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}
-                >
-                  <PersonAddIcon sx={{ color: "#059975" }} />
-                  <Typography variant="h6" color="white" fontWeight="bold">
-                    Recrutar para a Guilda
-                  </Typography>
-                </Box>
-
-                {carregando ? (
-                  <CircularProgress sx={{ color: "#059975" }} />
-                ) : (
-                  <>
-                    <FormControl fullWidth sx={{ mb: 3 }}>
-                      <InputLabel sx={{ color: "rgba(255,255,255,0.7)" }}>
-                        Selecione o Inventor
-                      </InputLabel>
-                      <Select
-                        value={formVinculo.aluno_id}
-                        onChange={(e) =>
-                          setFormVinculo({
-                            ...formVinculo,
-                            aluno_id: e.target.value,
-                          })
-                        }
-                        label="Selecione o Inventor"
-                        sx={{
-                          color: "white",
-                          ".MuiOutlinedInput-notchedOutline": {
-                            borderColor: "rgba(5, 153, 117, 0.5)",
-                          },
-                        }}
-                      >
-                        {alunos.map((aluno) => (
-                          <MenuItem key={aluno.id} value={aluno.id}>
-                            {aluno.nome} -{" "}
-                            {aluno.guilda_id
-                              ? "(Já tem Guilda)"
-                              : "(Sem Guilda)"}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <FormControl fullWidth sx={{ mb: 3 }}>
-                      <InputLabel sx={{ color: "rgba(255,255,255,0.7)" }}>
-                        Selecione a Guilda
-                      </InputLabel>
-                      <Select
-                        value={formVinculo.guilda_id}
-                        onChange={(e) =>
-                          setFormVinculo({
-                            ...formVinculo,
-                            guilda_id: e.target.value,
-                          })
-                        }
-                        label="Selecione a Guilda"
-                        sx={{
-                          color: "white",
-                          ".MuiOutlinedInput-notchedOutline": {
-                            borderColor: "rgba(5, 153, 117, 0.5)",
-                          },
-                        }}
-                      >
-                        {guildas.map((guilda) => (
-                          <MenuItem key={guilda.id} value={guilda.id}>
-                            {guilda.nome}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      onClick={handleVincularAluno}
-                      disabled={!formVinculo.aluno_id || !formVinculo.guilda_id}
-                      sx={{
-                        py: 1.5,
-                        bgcolor: "#059975",
-                        color: "white",
-                        fontWeight: "bold",
-                        borderRadius: 2,
-                        "&:hover": { bgcolor: "#037a5d" },
-                      }}
-                    >
-                      VINCULAR INVENTOR
-                    </Button>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* ==========================================
-              3. VISÃO GERAL DAS GUILDAS
-          ========================================== */}
-          <Grid size={{ xs: 12 }}>
-            <Typography
-              variant="h5"
-              color="white"
-              fontWeight="bold"
-              sx={{
-                mt: 4,
-                mb: 3,
-                borderBottom: "1px solid rgba(255,255,255,0.1)",
-                pb: 1,
-              }}
-            >
-              Guildas Ativas no Sistema
+      {/* TABELA DE ALUNOS */}
+      <TableContainer
+        component={Paper}
+        sx={{
+          bgcolor: "#1e293b",
+          borderRadius: 3,
+          border: "1px solid rgba(149, 106, 217, 0.2)",
+        }}
+      >
+        {carregando ? (
+          <Box sx={{ display: "flex", justifyContent: "center", p: 5 }}>
+            <CircularProgress sx={{ color: "#956AD9" }} />
+          </Box>
+        ) : alunos.length === 0 ? (
+          <Box sx={{ p: 5, textAlign: "center" }}>
+            <Typography color="rgba(255,255,255,0.6)">
+              Nenhum aluno encontrado no banco de dados.
             </Typography>
+          </Box>
+        ) : (
+          <Table>
+            <TableHead sx={{ bgcolor: "rgba(0,0,0,0.3)" }}>
+              <TableRow>
+                <TableCell
+                  sx={{ color: "rgba(255,255,255,0.7)", fontWeight: "bold" }}
+                >
+                  Aluno
+                </TableCell>
+                <TableCell
+                  sx={{ color: "rgba(255,255,255,0.7)", fontWeight: "bold" }}
+                >
+                  Guilda
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ color: "rgba(255,255,255,0.7)", fontWeight: "bold" }}
+                >
+                  Média
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ color: "rgba(255,255,255,0.7)", fontWeight: "bold" }}
+                >
+                  Frequência
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {alunos.map((aluno) => {
+                // Prevenção caso o aluno ainda não tenha notas ou frequência calculada no BD
+                const media = aluno.media || 0;
+                const frequencia = aluno.frequencia || 100;
 
-            <Grid container spacing={3}>
-              {guildas.length === 0 ? (
-                <Grid size={{ xs: 12 }}>
-                  <Typography sx={{ color: "rgba(255,255,255,0.5)" }}>
-                    Nenhuma Guilda forjada ainda.
-                  </Typography>
-                </Grid>
-              ) : (
-                guildas.map((guilda) => (
-                  <Grid size={{ xs: 12, md: 4 }} key={guilda.id}>
-                    <Card
-                      sx={{
-                        bgcolor: "rgba(0,0,0,0.4)",
-                        borderRadius: 3,
-                        border: "1px solid rgba(255, 247, 0, 0.3)",
-                      }}
-                    >
-                      <CardContent>
-                        <Typography
-                          variant="h6"
-                          color="#FFF700"
-                          fontWeight="bold"
-                        >
-                          {guilda.nome}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            color: "rgba(255,255,255,0.6)",
-                            mb: 2,
-                            minHeight: "40px",
-                          }}
-                        >
-                          {guilda.descricao || "Sem lema definido."}
-                        </Typography>
+                return (
+                  <TableRow
+                    key={aluno.id}
+                    hover
+                    onClick={() => abrirModal(aluno)}
+                    sx={{
+                      cursor: "pointer",
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      "&:hover": {
+                        bgcolor: "rgba(149, 106, 217, 0.1) !important",
+                      },
+                    }}
+                  >
+                    <TableCell sx={{ color: "white", fontWeight: "medium" }}>
+                      {aluno.nome}
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={aluno.guilda || "Sem Guilda"}
+                        size="small"
+                        sx={{
+                          bgcolor: "rgba(255, 247, 0, 0.1)",
+                          color: "#FFF700",
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography
+                        fontWeight="bold"
+                        color={media >= 60 ? "#2F9E41" : "#CD191E"}
+                      >
+                        {media}
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography
+                        fontWeight="bold"
+                        color={frequencia >= 75 ? "#2F9E41" : "#CD191E"}
+                      >
+                        {frequencia}%
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
+      </TableContainer>
 
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            color: "#059975",
-                            fontWeight: "bold",
-                            display: "block",
-                            mb: 1,
-                          }}
-                        >
-                          Inventores Recrutados ({guilda.alunos?.length || 0}):
-                        </Typography>
-                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                          {guilda.alunos && guilda.alunos.length > 0 ? (
-                            guilda.alunos.map((a: any) => (
-                              <Chip
-                                key={a.id}
-                                label={a.nome}
-                                size="small"
-                                sx={{
-                                  bgcolor: "rgba(255,255,255,0.1)",
-                                  color: "white",
-                                }}
-                              />
-                            ))
-                          ) : (
-                            <Typography
-                              variant="caption"
-                              sx={{ color: "rgba(255,255,255,0.3)" }}
-                            >
-                              Guilda vazia.
-                            </Typography>
-                          )}
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
+      {/* COMPONENTE DO MODAL */}
+      <ResumoAlunoModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aluno={alunoSelecionado}
+      />
     </Box>
   );
 }

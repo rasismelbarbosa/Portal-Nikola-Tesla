@@ -41,8 +41,8 @@ export default function SidebarAdmin() {
       icone: <DashboardIcon />,
     },
     {
-      titulo: "Turmas e Guildas",
-      rota: "/painel-professor/turmas",
+      titulo: "Guildas",
+      rota: "/painel-professor/guildas",
       icone: <GroupIcon />,
     },
     {

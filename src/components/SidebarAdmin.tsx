@@ -46,6 +46,11 @@ export default function SidebarAdmin() {
       icone: <GroupIcon />,
     },
     {
+      titulo: "Turmas",
+      rota: "/painel-professor/turmas",
+      icone: <GroupIcon />,
+    },
+    {
       titulo: "Avaliação PAPE (Prática)",
       rota: "/painel-professor/avaliacao-pape",
       icone: <FactCheckIcon />,

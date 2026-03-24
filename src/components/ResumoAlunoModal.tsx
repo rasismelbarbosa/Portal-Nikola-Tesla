@@ -7,6 +7,7 @@ import {
   Typography,
   Box,
   IconButton,
+  Divider,
   Chip,
   Grid, // Lembre-se: no MUI v6 usamos 'size' em vez de 'item xs'
   Avatar,
@@ -99,26 +100,60 @@ export default function ResumoAlunoModal({
               >
                 <TimelineIcon fontSize="small" /> DESEMPENHO ACADÊMICO
               </Typography>
+
+              {/* Notas Detalhadas */}
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
               >
-                <Typography>Média Geral:</Typography>
-                <Typography
-                  fontWeight="bold"
-                  color={aluno.media >= 60 ? "#2F9E41" : "#CD191E"}
-                >
-                  {aluno.media} / 100
+                <Typography variant="body2" color="rgba(255,255,255,0.7)">
+                  Nota PAPE (Prática):
+                </Typography>
+                <Typography variant="body2" fontWeight="bold">
+                  {aluno.nota_pape || 0}
                 </Typography>
               </Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <Typography variant="body2" color="rgba(255,255,255,0.7)">
+                  Nota PAP-PC (Portfólio):
+                </Typography>
+                <Typography variant="body2" fontWeight="bold">
+                  {aluno.nota_pap_pc || 0}
+                </Typography>
+              </Box>
+
+              <Divider sx={{ my: 1, borderColor: "rgba(255,255,255,0.1)" }} />
+
+              {/* Média Geral */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  mb: 1,
+                  alignItems: "center",
+                }}
+              >
+                <Typography>Média Geral:</Typography>
+                <Typography
+                  variant="h6"
+                  fontWeight="bold"
+                  color={(aluno.media || 0) >= 6 ? "#2F9E41" : "#CD191E"}
+                >
+                  {aluno.media || 0} / 10
+                </Typography>
+              </Box>
+
+              {/* Frequência */}
               <Box
                 sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
               >
                 <Typography>Frequência:</Typography>
                 <Typography
                   fontWeight="bold"
-                  color={aluno.frequencia >= 75 ? "#2F9E41" : "#CD191E"}
+                  color={(aluno.frequencia || 0) >= 75 ? "#2F9E41" : "#CD191E"}
                 >
-                  {aluno.frequencia}%
+                  {aluno.frequencia || 0}%
                 </Typography>
               </Box>
             </Box>

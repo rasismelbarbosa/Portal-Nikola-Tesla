@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { formSchema } from "@/schemas/registration-schema";
 import { redirect } from "next/navigation";
 import nodemailer from "nodemailer";
+import { log } from "console";
 // import { DEADLINE } from "@/config";
 
 const transporter = nodemailer.createTransport({
@@ -19,30 +20,44 @@ export async function submitRegistration(prevState: any, formData: FormData) {
 
   // 1. Transformar FormData em Objeto JS
   const rawData = {
-    fullName: formData.get("fullName"),
-    birthDate: formData.get("birthDate"),
-    studentClass: formData.get("studentClass"),
-    whatsapp: formData.get("whatsapp"),
-    email: formData.get("email"),
-    guardianName: formData.get("guardianName"),
-    guardianPhone: formData.get("guardianPhone"),
-    availableHours: formData.get("availableHours") === "on", // Checkboxes enviam "on" se marcados
-    commitmentAgreement: formData.get("commitmentAgreement") === "on",
-    motivation: formData.get("motivation"),
-    hasExperience: formData.get("hasExperience") === "on",
-    experienceDetails: formData.get("experienceDetails"),
-    termAcknowledgment: formData.get("termAcknowledgment") === "on",
+    fullName: formData.get("fullName")?.toString() || "",
+    birthDate: formData.get("birthDate")?.toString() || "",
+    studentClass: formData.get("studentClass")?.toString() || "",
+    whatsapp: formData.get("whatsapp")?.toString() || "",
+    email: formData.get("email")?.toString() || "",
+    guardianName: formData.get("guardianName")?.toString() || "",
+    guardianPhone: formData.get("guardianPhone")?.toString() || "",
+
+    // O ESCUDO ANTI-COLISÃO: Vasculha tudo à procura de "on" ou "true"
+    availableHours: formData
+      .getAll("availableHours")
+      .some((v) => v === "on" || v === "true"),
+    commitmentAgreement: formData
+      .getAll("commitmentAgreement")
+      .some((v) => v === "on" || v === "true"),
+    hasExperience: formData
+      .getAll("hasExperience")
+      .some((v) => v === "on" || v === "true"),
+    termAcknowledgment: formData
+      .getAll("termAcknowledgment")
+      .some((v) => v === "on" || v === "true"),
+
+    motivation: formData.get("motivation")?.toString() || "",
+    experienceDetails: formData.get("experienceDetails")?.toString() || "",
   };
 
   // 2. Validar
   const validated = formSchema.safeParse(rawData);
 
   if (!validated.success) {
-    return {
-      success: false,
-      errors: validated.error.flatten().fieldErrors,
-      message: "Verifique os campos obrigatórios.",
-    };
+    return (
+      console.log(validated.error),
+      {
+        success: false,
+        errors: validated.error.flatten().fieldErrors,
+        message: "Verifique os campos obrigatórios.",
+      }
+    );
   }
 
   // 3. Salvar no Banco
@@ -96,4 +111,6 @@ export async function submitRegistration(prevState: any, formData: FormData) {
       erroEmail,
     );
   }
+
+  redirect("/painel-professor");
 }

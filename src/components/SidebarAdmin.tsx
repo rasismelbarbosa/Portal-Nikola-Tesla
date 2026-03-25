@@ -23,6 +23,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PublishIcon from "@mui/icons-material/Publish";
+import ClassIcon from "@mui/icons-material/Class";
 
 export default function SidebarAdmin() {
   const pathname = usePathname();
@@ -49,6 +50,11 @@ export default function SidebarAdmin() {
       titulo: "Turmas",
       rota: "/painel-professor/turmas",
       icone: <GroupIcon />,
+    },
+    {
+      titulo: "Aulas",
+      rota: "/painel-professor/aulas",
+      icone: <ClassIcon />,
     },
     {
       titulo: "Avaliação PAPE (Prática)",

@@ -172,6 +172,11 @@ export default function InscricoesTesla() {
 
           <CardContent sx={{ p: { xs: 3, md: 5 } }}>
             <form action={formAction}>
+              <input
+                type="hidden"
+                name="studentClass"
+                value={watch("studentClass") || ""}
+              />
               {/* 1. DADOS PESSOAIS */}
               <Box sx={{ mb: 5 }}>
                 <Typography
@@ -453,6 +458,7 @@ export default function InscricoesTesla() {
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                   <FormControlLabel
                     control={<Checkbox {...register("termAcknowledgment")} />}
+                    value="on"
                     label="Estou ciente que preciso entregar o termo assinado à mão."
                   />
                   {errors.termAcknowledgment && (
@@ -463,6 +469,7 @@ export default function InscricoesTesla() {
 
                   <FormControlLabel
                     control={<Checkbox {...register("availableHours")} />}
+                    value="on"
                     label="Tenho disponibilidade no horário do projeto (11:20 às 12:10)."
                   />
                   {errors.availableHours && (
@@ -473,6 +480,7 @@ export default function InscricoesTesla() {
 
                   <FormControlLabel
                     control={<Checkbox {...register("commitmentAgreement")} />}
+                    value="on"
                     label="Concordo com a exigência de 80% de presença."
                   />
                   {errors.commitmentAgreement && (

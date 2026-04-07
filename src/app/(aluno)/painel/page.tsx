@@ -197,25 +197,18 @@ export default function PainelAluno() {
                     height: 80,
                     bgcolor: "#956AD9",
                     border: "2px solid #FFF700",
+                    fontSize: "3.5rem",
+                    lineHeight: 80,
                   }}
                 >
-                  <Box
-                    sx={{ position: "relative", width: "90%", height: "90%" }}
-                  >
-                    <Image
-                      src="/logo-tesla-branco.svg"
-                      alt="Logo Tesla"
-                      fill
-                      style={{ objectFit: "contain" }}
-                    />
-                  </Box>
+                  {aluno.nome.charAt(0).toUpperCase()}
                 </Avatar>
                 <Box>
                   <Typography
                     variant="overline"
                     sx={{ color: "rgba(255,255,255,0.6)", letterSpacing: 2 }}
                   >
-                    Bem-vindo de volta,
+                    Bem-vindo(a) de volta,
                   </Typography>
                   <Typography
                     variant="h4"
@@ -415,7 +408,7 @@ export default function PainelAluno() {
         <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}>
           <ForumIcon sx={{ color: "#00d4ff", fontSize: 30 }} />
           <Typography variant="h5" fontWeight="bold" color="white">
-            Transmissões da Torre de Controlo
+            Transmissões da Torre de Controle - Feedback do Prof
           </Typography>
         </Box>
 

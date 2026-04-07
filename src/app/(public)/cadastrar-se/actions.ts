@@ -112,5 +112,5 @@ export async function submitRegistration(prevState: any, formData: FormData) {
     );
   }
 
-  redirect("/painel-professor");
+  redirect("/");
 }

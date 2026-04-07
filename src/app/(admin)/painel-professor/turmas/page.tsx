@@ -228,6 +228,7 @@ export default function TurmasPage() {
                 // Prevenção caso o aluno ainda não tenha notas ou frequência calculada no BD
                 const media = aluno.media || 0;
                 const frequencia = aluno.frequencia || 100;
+                const guilda = aluno.guildas?.nome || "Sem Guilda";
 
                 return (
                   <TableRow
@@ -247,7 +248,7 @@ export default function TurmasPage() {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={aluno.guilda || "Sem Guilda"}
+                        label={guilda || "Sem Guilda"}
                         size="small"
                         sx={{
                           bgcolor: "rgba(255, 247, 0, 0.1)",

@@ -47,6 +47,12 @@ export async function aprovarCandidato(inscricaoId: string) {
       senha: senhaPadrao,
       nome: inscricao.full_name,
       turma: inscricao.student_class,
+      data_nascimento: inscricao.birth_date,
+      whatsapp: inscricao.whatsapp,
+      nome_responsavel: inscricao.guardian_name,
+      telefone_responsavel: inscricao.guardian_phone,
+      motivacao: inscricao.motivation,
+      experiencia_detalhes: inscricao.experience_details,
     });
 
     if (alunoError) return { erro: "Erro ao criar perfil do aluno." };

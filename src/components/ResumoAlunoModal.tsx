@@ -15,6 +15,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import TimelineIcon from "@mui/icons-material/Timeline";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
 
 // Definindo o que o Modal espera receber
 interface ResumoAlunoModalProps {
@@ -195,6 +196,88 @@ export default function ResumoAlunoModal({
                   {aluno.xp || 0} XP
                 </Typography>
               </Box>
+            </Box>
+          </Grid>
+
+          {/* BLOCO: DOSSIÊ E CONTACTOS */}
+          <Grid size={{ xs: 12 }}>
+            <Box sx={{ bgcolor: "rgba(0,0,0,0.2)", p: 2, borderRadius: 2 }}>
+              <Typography
+                variant="subtitle2"
+                color="rgba(255,255,255,0.6)"
+                mb={2}
+                display="flex"
+                alignItems="center"
+                gap={1}
+              >
+                <ContactPhoneIcon fontSize="small" /> DOSSIÊ DO RECRUTA
+              </Typography>
+
+              <Grid container spacing={2}>
+                {/* Coluna 1: Contactos */}
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Box sx={{ mb: 1 }}>
+                    <Typography variant="caption" color="rgba(255,255,255,0.5)">
+                      WhatsApp do Aluno
+                    </Typography>
+                    <Typography variant="body2">
+                      {aluno.whatsapp || "Não informado"}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mb: 1 }}>
+                    <Typography variant="caption" color="rgba(255,255,255,0.5)">
+                      Data de Nascimento
+                    </Typography>
+                    <Typography variant="body2">
+                      {aluno.data_nascimento
+                        ? new Date(aluno.data_nascimento).toLocaleDateString(
+                            "pt-BR",
+                          )
+                        : "Não informada"}
+                    </Typography>
+                  </Box>
+                </Grid>
+
+                {/* Coluna 2: Responsável */}
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <Box sx={{ mb: 1 }}>
+                    <Typography variant="caption" color="rgba(255,255,255,0.5)">
+                      Responsável Legal
+                    </Typography>
+                    <Typography variant="body2">
+                      {aluno.nome_responsavel || "O próprio (Maior de idade)"}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ mb: 1 }}>
+                    <Typography variant="caption" color="rgba(255,255,255,0.5)">
+                      Telefone do Responsável
+                    </Typography>
+                    <Typography variant="body2">
+                      {aluno.telefone_responsavel || "---"}
+                    </Typography>
+                  </Box>
+                </Grid>
+
+                {/* Coluna 3 (Linha Inteira): Motivação */}
+                <Grid size={{ xs: 12 }}>
+                  <Divider
+                    sx={{ my: 1, borderColor: "rgba(255,255,255,0.1)" }}
+                  />
+                  <Typography variant="caption" color="rgba(255,255,255,0.5)">
+                    Motivação / Carta de Intenção
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontStyle: "italic",
+                      mt: 0.5,
+                      color: "rgba(255,255,255,0.8)",
+                    }}
+                  >
+                    {aluno.motivacao || "Nenhuma motivação registada na base."}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Box>
           </Grid>
 

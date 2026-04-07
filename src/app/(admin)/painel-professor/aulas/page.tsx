@@ -10,11 +10,14 @@ import {
   CircularProgress,
   Chip,
   Divider,
+  Button,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import { createClient } from "@/utils/supabase/client";
 import ResumoAulaModal from "@/components/ResumoAulaModal";
+import Link from "next/link";
 
 // 🛡️ O ESCUDO ANTI-FUSO HORÁRIO (Aplicado nos Cartões)
 const formatarDataLocal = (dataString: string) => {
@@ -89,14 +92,38 @@ export default function AcervoAulasPage() {
   return (
     <Box sx={{ maxWidth: 1200, mx: "auto", pb: 5 }}>
       {/* CABEÇALHO */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight="bold" color="white" gutterBottom>
-          Acervo de Aulas
-        </Typography>
-        <Typography variant="body1" color="rgba(255,255,255,0.6)">
-          Histórico completo de todos os planos de aula e estatísticas de
-          frequência do Projeto Tesla.
-        </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
+          alignItems: { md: "center" },
+          mb: 4,
+          gap: 2,
+        }}
+      >
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" fontWeight="bold" color="white" gutterBottom>
+            Acervo de Aulas
+          </Typography>
+          <Typography variant="body1" color="rgba(255,255,255,0.6)">
+            Histórico completo de todos os planos de aula e estatísticas de
+            frequência do Projeto Tesla.
+          </Typography>
+        </Box>
+        <Button
+          component={Link}
+          href="/painel-professor/aulas/cadastro-aula"
+          variant="contained"
+          startIcon={<AddBoxIcon />}
+          sx={{
+            bgcolor: "#956AD9",
+            fontWeight: "bold",
+            "&:hover": { bgcolor: "#7a52b3" },
+          }}
+        >
+          Cadastrar Aula
+        </Button>
       </Box>
 
       {/* GRELHA DE AULAS */}

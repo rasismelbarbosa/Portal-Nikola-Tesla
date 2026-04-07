@@ -19,7 +19,6 @@ import Link from "next/link";
 import ChecklistRtlIcon from "@mui/icons-material/ChecklistRtl";
 import ResumoAlunoModal from "@/components/ResumoAlunoModal";
 import { createClient } from "@/utils/supabase/client";
-import AddBoxIcon from "@mui/icons-material/AddBox";
 import DownloadIcon from "@mui/icons-material/Download";
 
 export default function TurmasPage() {
@@ -36,7 +35,7 @@ export default function TurmasPage() {
     const buscarAlunos = async () => {
       const { data, error } = await supabase
         .from("alunos")
-        .select("*")
+        .select("*, guildas (nome)")
         .order("nome", { ascending: true }); // Ordena por ordem alfabética
 
       if (error) {
@@ -144,19 +143,6 @@ export default function TurmasPage() {
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Button
-            component={Link}
-            href="/painel-professor/turmas/cadastro-aula"
-            variant="contained"
-            startIcon={<AddBoxIcon />}
-            sx={{
-              bgcolor: "#956AD9",
-              fontWeight: "bold",
-              "&:hover": { bgcolor: "#7a52b3" },
-            }}
-          >
-            Cadastrar Aula
-          </Button>
           <Button
             component={Link}
             href="/painel-professor/turmas/cadastro-frequencia"

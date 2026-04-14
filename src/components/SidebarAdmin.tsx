@@ -24,6 +24,8 @@ import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PublishIcon from "@mui/icons-material/Publish";
 import ClassIcon from "@mui/icons-material/Class";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import ShutterSpeedIcon from "@mui/icons-material/ShutterSpeed";
 
 export default function SidebarAdmin() {
   const pathname = usePathname();
@@ -40,6 +42,11 @@ export default function SidebarAdmin() {
       titulo: "Visão Geral",
       rota: "/painel-professor",
       icone: <DashboardIcon />,
+    },
+    {
+      titulo: "Ponto",
+      rota: "/painel-professor/ponto",
+      icone: <ShutterSpeedIcon />,
     },
     {
       titulo: "Guildas",
@@ -70,6 +77,11 @@ export default function SidebarAdmin() {
       titulo: "Feedback Formativo",
       rota: "/painel-professor/feedback",
       icone: <FactCheckIcon />,
+    },
+    {
+      titulo: "Diário de Bordo",
+      rota: "/painel-professor/diario-de-bordo",
+      icone: <EditNoteIcon />,
     },
     {
       titulo: "Cadastrar Alunos",
